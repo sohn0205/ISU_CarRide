@@ -27,7 +27,18 @@ public class Database {
         url = props.getProperty("jdbc.url");
         username=props.getProperty("jdbc.username");
         password=props.getProperty("jdbc.password");
+
+        if(password==null){
+            password="";
+        }
+        if(username==null){
+            password="";
+        }
+        if (driver != null) {
+            Class.forName(driver);
+        }
     }
+
     public static Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection(url,username,password);
