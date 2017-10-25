@@ -35,7 +35,6 @@ public class Database {
         }
         if (driver != null) {
             Class.forName(driver);
-
         }
     }
 
