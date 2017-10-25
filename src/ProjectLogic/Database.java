@@ -11,6 +11,7 @@ public class Database {
 
     /**
      * Creates a simple datasource, does not take in an argument
+     *
      */
     private static String url;
     private static String username;
@@ -38,6 +39,9 @@ public class Database {
         }
     }
 
+    /**
+     * @return database connection
+     */
     public static Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection(url,username,password);
