@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Oct 25 18:40:37 CDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-015f-55e8-be38-000006ba0728 
+on database directory /Users/danieltidyman/Documents/Classes/MIS 307/ISU Car Ride/BigJavaDB with class loader sun.misc.Launcher$AppClassLoader@14dad5dc 
+Loaded from file:/Users/danieltidyman/Documents/Classes/MIS%20307/ISU%20Car%20Ride/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_60-b27
+user.dir=/Users/danieltidyman/Documents/Classes/MIS 307/ISU Car Ride
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.13.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
