@@ -1,5 +1,5 @@
 # ISU CAR RIDE
-#Project Summary
+# Project Summary
 The project we have chosen to complete is the logic for a car share system, similar to that of Uber or Lyft. This project will be able to cover three of the four required components, specifically reading/writing from text files, relational databases and SQL, and using multiple classes. This project will be written in Java, and using components learned in class to connect to databases and writing daily reports out to files. Challenges for this project will be setting up the proper environment to allow collaboration between team members without creating conflicts in code, and being able to cover edge cases while testing. 
 
 ## Project Design
