@@ -8,10 +8,13 @@ import java.util.Scanner;
 
 /**
  * @author Daniel Tidyman
+ *
+ * Updated 8.11.2017
  */
 public class Rider {
     private String startLocation;
     private String destination;
+    private double distanceTraveled;
     private int rideStyle;
     private String customerEmail;
     private int customerCardNumber;
@@ -21,7 +24,6 @@ public class Rider {
      * Constructs a new Rider object
      */
     public Rider(){
-
 
     }
 
@@ -34,49 +36,49 @@ public class Rider {
         Scanner customerData = new Scanner(System.in);
 
         //Ask the Customer for their relevant data
-        System.out.println("What is your first name?");
-        String firstName = customerData.next().toUpperCase();
-
+        System.out.println("\nWhat is your first name?");
+        String firstName = customerData.next();
+        //TODO handle spaces in names
         System.out.println("What is your last name?");
-        String lastName =customerData.next().toUpperCase();
+        String lastName =customerData.next();
 
         System.out.println("What is your age (in years)?");
         //little correcting so certain people don't try to break the code
         while(!customerData.hasNextInt()){
-            System.out.println("**Invalid age entered!**\nWhat is your age (in years) (please only digits)?");
+            System.out.println("**Invalid age entered!**\nWhat is your age (in years) (please enter only digits)?\n");
         }
         int customerAge = customerData.nextInt();
 
-        System.out.println("What is your email address?");
-        String customerEmail =customerData.next().toUpperCase();
+        System.out.println("What is your email address?\n");
+        String customerEmail =customerData.next();
 
-        System.out.println("What is your password?");
+        System.out.println("What is your password?\n");
         String customerPassword = customerData.next();
 
         //TODO add a password hash to be super secure?
 
-        System.out.println("What is your credit/debit card number?\nPlease enter as such: 1234567891234567");
+        System.out.println("What is your credit/debit card number?\nPlease enter as such: 1234567891234567\n");
         //more error correcting
 
         while(!customerData.hasNextInt()){
-            System.out.println("**INVALID CARD NUMBER ENTERED** \nWhat is your 16 digit credit/debit card number?\nPlease enter as such: 1234567891234567");
+            System.out.println("**INVALID CARD NUMBER ENTERED** \nWhat is your 16 digit credit/debit card number?\nPlease enter as such: 1234567891234567\n");
         }
         int cardNumber = customerData.nextInt();
         //TODO add the algorithm that can check for valid card numbers and check the PIN/Expiri date?
 
        try(Connection con = Database.getConnection()){
 
-           String newCustomerQuery = "INSERT INTO CUSTOMER VALUES(?,?,?,?,?,?)";
+           String newCustomerQuery = "INSERT INTO CUSTOMER VALUES(?,?,?,?,?,?,?)";
 
            PreparedStatement newCustomerStatement = con.prepareStatement(newCustomerQuery);
 
            //set customer values in SQL and execute
-           newCustomerStatement.setString(1,firstName);
-           newCustomerStatement.setString(2,lastName);
-           newCustomerStatement.setInt(3,customerAge);
-           newCustomerStatement.setString(4,customerEmail);
-           newCustomerStatement.setString(5,customerPassword);
-           newCustomerStatement.setInt(6,cardNumber);
+           newCustomerStatement.setString(2,firstName);
+           newCustomerStatement.setString(3,lastName);
+           newCustomerStatement.setInt(4,customerAge);
+           newCustomerStatement.setString(5,customerEmail);
+           newCustomerStatement.setString(6,customerPassword);
+           newCustomerStatement.setInt(7,cardNumber);
            newCustomerStatement.execute();
 
            con.close();
@@ -96,26 +98,26 @@ public class Rider {
 
         Scanner rideDetails = new Scanner(System.in);
 
-        System.out.println("Please enter your starting address (including City, State and Zip)\nExample: 1234 North Cy Drive, Ames, IA 50010");
+        System.out.println("Please enter your starting address (including City, State and Zip)\nExample: 1234 North Cy Drive, Ames, IA 50010\n");
         startLocation = rideDetails.next();
 
-        System.out.println("Please enter your destination address (including City, State and Zip)\nExample: 1234 North Cy Drive, Ames, IA 50010");
+        System.out.println("Please enter your destination address (including City, State and Zip)\nExample: 1234 North Cy Drive, Ames, IA 50010\n");
         destination = rideDetails.next();
 
-        System.out.println("Please select your ride style by typing the corresponding number: \n(1) Regular\n(2) Car Pool\n(3)Cy-lect");
+        System.out.println("Please select your ride style by typing the corresponding number: \n(1) Regular\n(2) Car Pool\n(3)Cy-lect\n");
         while(!rideDetails.hasNextInt() || rideDetails.nextInt()<1 || rideDetails.nextInt()>3){
-            System.out.println("**INVALID SELECTION**\n \nPlease select your ride style by typing the corresponding number: \n(1) Regular\n(2) Car Pool\n(3)Cy-lect");
+            System.out.println("**INVALID SELECTION**\n \nPlease select your ride style by typing the corresponding number: \n(1) Regular\n(2) Car Pool\n(3)Cy-lect\n");
         }
         rideStyle = rideDetails.nextInt();
 
         try(Connection connection = Database.getConnection()){
 
             //TODO fix select
-            String rideQuery = "SELECT FROM DRIVERS WHERE RIDESTYLE=?";
+            String rideQuery = "SELECT FROM DRIVERS WHERE RIDESTYLE=? AND AVAILABILITY = 1";
             PreparedStatement ridePrep = connection.prepareStatement(rideQuery);
 
             ridePrep.setInt(1,rideStyle);
-            //TODO FINISH THIS
+            //TODO FINISH THIS WE HAVE TO FIND A WAY TO GATHER DISTANCES FROM A POINT IN A DATABASE AND LOCATE DRIVERS
 
             connection.close();
 
@@ -128,7 +130,7 @@ public class Rider {
     public void RiderCharges(){
 
     }
-    public void rateDriver(int starRating){
+    public void rateDriver(){
 
     }
     public void customerLogin(){
