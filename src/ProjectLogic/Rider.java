@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author Daniel Tidyman
+ */
 public class Rider {
     private String startLocation;
     private String destination;
@@ -132,6 +135,7 @@ public class Rider {
 
         Scanner loginScanner = new Scanner(System.in);
 
+        //These next few lines try to gather customer data and search a database for corresponding entries.
         System.out.println("Enter your email: ");
         customerEmail = loginScanner.next();
 
@@ -140,12 +144,13 @@ public class Rider {
 
         try(Connection connection = Database.getConnection()){
 
+            //Since all we need is the customerEmail and cardNumber, we just select these two fields
             String loginQuery = "SELECT CustomerEmail, Card_Number FROM CUSTOMER WHERE EMAIL=? AND PASSWORD=?";
 
+            //these set and execute the query to try and find the matching customer data
             PreparedStatement loginSearch = connection.prepareStatement(loginQuery);
             loginSearch.setString(1,customerEmail);
             loginSearch.setString(2,password);
-
             ResultSet resultSet = loginSearch.executeQuery();
 
             //tests to see if we have correct login information
@@ -158,7 +163,6 @@ public class Rider {
 
                 loginSearch.setString(1,customerEmail);
                 loginSearch.setString(2,password);
-
                 resultSet = loginSearch.executeQuery();
             }
 
