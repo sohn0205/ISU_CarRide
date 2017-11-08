@@ -1,7 +1,10 @@
 package ProjectLogic;
 
+import javax.xml.crypto.Data;
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -9,6 +12,10 @@ public class Rider {
     public String startLocation;
     public String destination;
     public int rideStyle;
+
+    private String customerEmail;
+    private String customerCardNumber;
+    private double customerChargeAmount;
 
     /**
      * Class to create a brand new Customer
@@ -101,14 +108,21 @@ public class Rider {
 
         try(Connection connection = Database.getConnection()){
 
+            //TODO fix select
             String rideQuery = "SELECT FROM DRIVERS WHERE RIDESTYLE=?";
             PreparedStatement ridePrep = connection.prepareStatement(rideQuery);
 
             ridePrep.setInt(1,rideStyle);
+            //TODO FINISH THIS
+
+            connection.close();
 
         }
         catch (SQLException e){
 
+        }
+        finally {
+            rideDetails.close();
         }
 
     }
@@ -121,5 +135,47 @@ public class Rider {
     }
     public void customerLogin(){
 
+        Scanner loginScanner = new Scanner(System.in);
+
+        System.out.println("Enter your email: ");
+        customerEmail = loginScanner.next();
+
+        System.out.println("Enter your password: ");
+        String password = loginScanner.next();
+
+        try(Connection connection = Database.getConnection()){
+
+            String loginQuery = "SELECT CustomerEmail, Card_Number FROM CUSTOMER WHERE EMAIL=? AND PASSWORD=?";
+
+            PreparedStatement loginSearch = connection.prepareStatement(loginQuery);
+            loginSearch.setString(1,customerEmail);
+            loginSearch.setString(2,password);
+
+            ResultSet resultSet = loginSearch.executeQuery();
+
+            //tests to see if we have correct login information
+            while (resultSet.getString(1).isEmpty()){
+                System.out.println("**INVALID EMAIL/PASSWORD. PLEASE TRY AGAIN**\n \nEnter your email: ");
+                customerEmail = loginScanner.next();
+
+                System.out.println("Enter your password: ");
+                password = loginScanner.next();
+
+                loginSearch.setString(1,customerEmail);
+                loginSearch.setString(2,password);
+
+                resultSet = loginSearch.executeQuery();
+            }
+
+            //set customer data so we can charge 💰💰💰
+            customerEmail=resultSet.getString(1);
+            customerCardNumber = resultSet.getString(2);
+
+            System.out.println("**LOGIN SUCCESSFUL**");
+
+        }
+        catch (SQLException e){
+
+        }
     }
 }
