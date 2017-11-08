@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Rider {
-<<<<<<< Updated upstream
-=======
     /**
      * Class to create a brand new Customer
      *
@@ -96,5 +94,4 @@ public class Rider {
     public void customerLogin(){
 
     }
->>>>>>> Stashed changes
 }
