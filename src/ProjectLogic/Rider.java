@@ -1,7 +1,5 @@
 package ProjectLogic;
 
-import javax.xml.crypto.Data;
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,25 +7,32 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Rider {
-    public String startLocation;
-    public String destination;
-    public int rideStyle;
-
+    private String startLocation;
+    private String destination;
+    private int rideStyle;
     private String customerEmail;
-    private String customerCardNumber;
+    private int customerCardNumber;
     private double customerChargeAmount;
+
+    /**
+     * Constructs a new Rider object
+     */
+    public Rider(){
+
+
+    }
 
     /**
      * Class to create a brand new Customer
      *
      */
-	public void newCustomer() {
+	public void NewCustomer() {
 
-	    Scanner customerData = new Scanner(System.in);
+        Scanner customerData = new Scanner(System.in);
 
-	    //Ask the Customer for their relevant data
+        //Ask the Customer for their relevant data
         System.out.println("What is your first name?");
-	    String firstName = customerData.next().toUpperCase();
+        String firstName = customerData.next().toUpperCase();
 
         System.out.println("What is your last name?");
         String lastName =customerData.next().toUpperCase();
@@ -75,13 +80,8 @@ public class Rider {
 
        }
        catch (SQLException e){
-
-
+            //TODO
        }
-       finally {
-           customerData.close();
-       }
-
     }
 
     /**
@@ -103,7 +103,6 @@ public class Rider {
         while(!rideDetails.hasNextInt() || rideDetails.nextInt()<1 || rideDetails.nextInt()>3){
             System.out.println("**INVALID SELECTION**\n \nPlease select your ride style by typing the corresponding number: \n(1) Regular\n(2) Car Pool\n(3)Cy-lect");
         }
-
         rideStyle = rideDetails.nextInt();
 
         try(Connection connection = Database.getConnection()){
@@ -119,12 +118,8 @@ public class Rider {
 
         }
         catch (SQLException e){
-
+            //TODO
         }
-        finally {
-            rideDetails.close();
-        }
-
     }
 
     public void RiderCharges(){
@@ -169,13 +164,17 @@ public class Rider {
 
             //set customer data so we can charge 💰💰💰
             customerEmail=resultSet.getString(1);
-            customerCardNumber = resultSet.getString(2);
+            customerCardNumber = Integer.parseInt(resultSet.getString(2));
 
             System.out.println("**LOGIN SUCCESSFUL**");
 
         }
         catch (SQLException e){
-
+            //TODO
         }
+    }
+    public String returnLogin(){
+        //TODO
+        return null;
     }
 }
