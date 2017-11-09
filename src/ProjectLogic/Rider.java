@@ -17,7 +17,7 @@ public class Rider {
     private double distanceTraveled;
     private int rideStyle;
     private String customerEmail;
-    private int customerCardNumber;
+    private String customerCardNumber;
     private double customerChargeAmount;
 
     /**
@@ -45,47 +45,44 @@ public class Rider {
         System.out.println("What is your age (in years)?");
         //little correcting so certain people don't try to break the code
         while(!customerData.hasNextInt()){
-            System.out.println("**Invalid age entered!**\nWhat is your age (in years) (please enter only digits)?\n");
+            customerData.next();
+            System.out.println("**Invalid age entered!**\nWhat is your age (in years) (please enter only digits)?");
         }
         int customerAge = customerData.nextInt();
 
-        System.out.println("What is your email address?\n");
+        System.out.println("What is your email address?");
         String customerEmail =customerData.next();
 
-        System.out.println("What is your password?\n");
+        System.out.println("What is your password?");
         String customerPassword = customerData.next();
 
-        //TODO add a password hash to be super secure?
-
-        System.out.println("What is your credit/debit card number?\nPlease enter as such: 1234567891234567\n");
+        System.out.println("What is your credit/debit card number?\nPlease enter as such: 1234567891234567");
         //more error correcting
-
-        while(!customerData.hasNextInt()){
-            System.out.println("**INVALID CARD NUMBER ENTERED** \nWhat is your 16 digit credit/debit card number?\nPlease enter as such: 1234567891234567\n");
+        while(customerData.next().length() <16 || customerData.next().length()>16){
+            customerData.next();
+            System.out.println("\n**INVALID CARD NUMBER**\nWhat is your credit/debit card number?\nPlease enter as such: 1234567891234567");
         }
-        int cardNumber = customerData.nextInt();
-        //TODO add the algorithm that can check for valid card numbers and check the PIN/Expiri date?
+        customerCardNumber = customerData.next();
 
        try(Connection con = Database.getConnection()){
 
-           String newCustomerQuery = "INSERT INTO CUSTOMER VALUES(?,?,?,?,?,?,?)";
+           String newCustomerQuery = "INSERT INTO CUSTOMER (RiderName,Age,CustomerEmail,Password,Card_Number) VALUES(?,?,?,?,?)";
 
            PreparedStatement newCustomerStatement = con.prepareStatement(newCustomerQuery);
 
            //set customer values in SQL and execute
-           newCustomerStatement.setString(2,firstName);
-           newCustomerStatement.setString(3,lastName);
-           newCustomerStatement.setInt(4,customerAge);
-           newCustomerStatement.setString(5,customerEmail);
-           newCustomerStatement.setString(6,customerPassword);
-           newCustomerStatement.setInt(7,cardNumber);
+           newCustomerStatement.setString(1,firstName+" "+lastName);
+           newCustomerStatement.setInt(2,customerAge);
+           newCustomerStatement.setString(3,customerEmail);
+           newCustomerStatement.setString(4,customerPassword);
+           newCustomerStatement.setString(5,customerCardNumber);
            newCustomerStatement.execute();
 
            con.close();
 
        }
        catch (SQLException e){
-            //TODO
+           System.out.println(e);
        }
     }
 
@@ -113,7 +110,7 @@ public class Rider {
         try(Connection connection = Database.getConnection()){
 
             //TODO fix select
-            String rideQuery = "SELECT FROM DRIVERS WHERE RIDESTYLE=? AND AVAILABILITY = 1";
+            String rideQuery = "SELECT * FROM DRIVERS WHERE RIDESTYLE=? AND AVAILABILITY = 1";
             PreparedStatement ridePrep = connection.prepareStatement(rideQuery);
 
             ridePrep.setInt(1,rideStyle);
@@ -147,7 +144,7 @@ public class Rider {
         try(Connection connection = Database.getConnection()){
 
             //Since all we need is the customerEmail and cardNumber, we just select these two fields
-            String loginQuery = "SELECT CustomerEmail, Card_Number FROM CUSTOMER WHERE EMAIL=? AND PASSWORD=?";
+            String loginQuery = "SELECT CustomerEmail, Card_Number FROM CUSTOMER WHERE CustomerEmail=? AND PASSWORD=?";
 
             //these set and execute the query to try and find the matching customer data
             PreparedStatement loginSearch = connection.prepareStatement(loginQuery);
@@ -156,8 +153,8 @@ public class Rider {
             ResultSet resultSet = loginSearch.executeQuery();
 
             //tests to see if we have correct login information
-            while (resultSet.getString(1).isEmpty()){
-                System.out.println("**INVALID EMAIL/PASSWORD. PLEASE TRY AGAIN**\n \nEnter your email: ");
+            while (!resultSet.next()){
+                System.out.println("\n**INVALID EMAIL/PASSWORD. PLEASE TRY AGAIN**\n \nEnter your email: ");
                 customerEmail = loginScanner.next();
 
                 System.out.println("Enter your password: ");
@@ -170,13 +167,13 @@ public class Rider {
 
             //set customer data so we can charge 💰💰💰
             customerEmail=resultSet.getString(1);
-            customerCardNumber = Integer.parseInt(resultSet.getString(2));
+            customerCardNumber = resultSet.getString(2);
 
-            System.out.println("**LOGIN SUCCESSFUL**");
+            System.out.println("\n**LOGIN SUCCESSFUL**");
 
         }
         catch (SQLException e){
-            //TODO
+            System.out.println(e);
         }
     }
     public String returnLogin(){
