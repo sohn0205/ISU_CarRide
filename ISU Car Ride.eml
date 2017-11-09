@@ -3,7 +3,10 @@
 	<output-test url="file://$MODULE_DIR$/out/test/ISU Car Ride"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="mysql.jdbc.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/mysql.jdbc.jar!/"/>
+	</lib>
 	<levels>
-		<level name="derby" value="project"/>
+		<level name="mysql.jdbc" value="project"/>
 	</levels>
 </component>

@@ -9,8 +9,9 @@ public class MainRun {
 
     public static void main(String args[]) throws
             SQLException, IOException, ClassNotFoundException {
-
+        System.out.println("Going online...Please be patient\n");
         Database.init();
+        System.out.println("You are now connected.\n");
 
         System.out.println("**************************************\n" +
                 "*                                   *\n" +
@@ -20,7 +21,7 @@ public class MainRun {
         System.out.println("\nPlease select if you are a: \n(1) new Customer \n(2) Driver \n(3) previous customer that needs to login");
         System.out.println("\nPlease type number of selection here: ");
 
-
+        //TODO all the main running stuff!
 
     }
 

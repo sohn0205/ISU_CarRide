@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/derby"/>
+	<classpathentry kind="lib" path="mysql.jdbc.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql.jdbc"/>
 	<classpathentry kind="output" path="out/production/ISU Car Ride"/>
 </classpath>
