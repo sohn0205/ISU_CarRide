@@ -5,9 +5,19 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ *
+ * @author Daniel Tidyman
+ *
+ * Creates an instance to connect to my personal MySQL server, tests our skills
+ *
+ * updated 8.11.2017
+ * */
+
 public class Database {
 
     /**
+     *
      * Creates a simple datasource, does not take in an argument
      */
 
