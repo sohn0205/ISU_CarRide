@@ -1,5 +1,6 @@
 package ProjectLogic;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +59,7 @@ public class Rider {
 
         System.out.println("What is your credit/debit card number?\nPlease enter as such: 1234567891234567");
         //more error correcting
+        //TODO fix
         while(customerData.next().length() <16 || customerData.next().length()>16){
             customerData.next();
             System.out.println("\n**INVALID CARD NUMBER**\nWhat is your credit/debit card number?\nPlease enter as such: 1234567891234567");
@@ -79,7 +81,6 @@ public class Rider {
            newCustomerStatement.execute();
 
            con.close();
-
        }
        catch (SQLException e){
            System.out.println(e);
