@@ -1,9 +1,8 @@
 package ProjectLogic;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Scanner;
 
 public class MainRun {
 
@@ -13,6 +12,8 @@ public class MainRun {
         Database.init();
         System.out.println("You are now connected.\n");
 
+        Scanner mainMenu = new Scanner (System.in);
+
         System.out.println("**************************************\n" +
                 "*                                   *\n" +
                 "* Welcome to ISU's Car Ride System! *\n" +
@@ -21,7 +22,18 @@ public class MainRun {
         System.out.println("\nPlease select if you are a: \n(1) new Customer \n(2) Driver \n(3) previous customer that needs to login");
         System.out.println("\nPlease type number of selection here: ");
 
-        //TODO all the main running stuff!
+        switch(mainMenu.nextInt()){
+            case 1:
+                Rider rider = new Rider();
+
+                rider.customerLogin();
+            case 2:
+                Rider rider1 = new Rider();
+                rider1.NewCustomer();
+
+        }
+
+
 
     }
 
