@@ -31,7 +31,7 @@ public class Database {
         Class.forName("com.mysql.jdbc.Driver");
         url = "jdbc:mysql://dantidyman.me:3306/carRide?autoreconnect=true&useSSL=false";
         username="carRide";
-        password="sha256saltedMyCornBeef";
+        password="FJT4dTh9NaQydUie";
 
         if(password==null){
             password="";
